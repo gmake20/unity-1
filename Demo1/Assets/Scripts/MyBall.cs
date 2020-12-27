@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ public class MyBall : MonoBehaviour
     void FixedUpdate()
     {
         // Update1();
-        // Update2();
+        Update2();
         Update3();
     }
 
@@ -39,5 +40,12 @@ public class MyBall : MonoBehaviour
     void Update3() {
         // 3. 회전력
         rig.AddTorque(Vector3.up);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        // Cube와 충돌하는 동안은 AddForce가 계속 적용된다.
+        if (other.gameObject.CompareTag("Cube"))
+            rig.AddForce(Vector3.up * 2, ForceMode.Impulse);
     }
 }

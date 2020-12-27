@@ -13,8 +13,10 @@ public class MyBall : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        // Update1();
+        // Update2();
         Update3();
     }
 
@@ -37,10 +39,5 @@ public class MyBall : MonoBehaviour
     void Update3() {
         // 3. 회전력
         rig.AddTorque(Vector3.up);
-    }
-
-
-    void FixedUpdate() {  
-        // rig.velocity = new Vector3(3,3,3); // Vector3.right;
     }
 }

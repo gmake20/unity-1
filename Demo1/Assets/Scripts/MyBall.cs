@@ -48,4 +48,9 @@ public class MyBall : MonoBehaviour
         if (other.gameObject.CompareTag("Cube"))
             rig.AddForce(Vector3.up * 2, ForceMode.Impulse);
     }
+    
+    
+    public void Jump() {
+        rig.AddForce(Vector3.up * 50, ForceMode.Impulse);
+    }
 }

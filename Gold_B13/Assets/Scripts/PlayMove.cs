@@ -13,6 +13,9 @@ using UnityEngine;
 public class PlayMove : MonoBehaviour
 {
     public float maxSpeed;
+
+    public float jumpPower; 
+
     Rigidbody2D rigid;    
 
     SpriteRenderer spriteRenderer;
@@ -27,6 +30,12 @@ public class PlayMove : MonoBehaviour
     }
 
     void Update() {
+        // Jump
+        if(Input.GetButtonDown("Jump") && anim.GetBool("isJumping") == false) {
+            rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            anim.SetBool("isJumping", true);
+        }
+
         // Stop Speed 
         if(Input.GetButtonUp("Horizontal")) {
             // normalized : 벡터크기를 1로 만든상태
@@ -39,9 +48,9 @@ public class PlayMove : MonoBehaviour
         }
 
         if(Mathf.Abs(rigid.velocity.x) < 0.3)
-            anim.SetBool("isWalking", true);
-        else
             anim.SetBool("isWalking", false);
+        else
+            anim.SetBool("isWalking", true);
 
     }
 
@@ -57,6 +66,17 @@ public class PlayMove : MonoBehaviour
         }
         else if(rigid.velocity.x < maxSpeed*(-1)) {
             rigid.velocity = new Vector2(maxSpeed*(-1),rigid.velocity.y);
+        }
+
+        // Landing Platform
+        if(rigid.velocity.y < 0) {
+            Debug.DrawRay(rigid.position, Vector3.down, new Color(0,1,0));
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform"));
+            if(rayHit.collider != null) {
+                // Debug.Log(rayHit.collider.name);
+                if(rayHit.distance < 0.5f)
+                    anim.SetBool("isJumping", false);
+            }
         }
     }
 

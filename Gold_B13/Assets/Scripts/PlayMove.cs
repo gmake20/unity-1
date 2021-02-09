@@ -80,4 +80,30 @@ public class PlayMove : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter2D(Collision2D coll) {
+        if(coll.gameObject.tag == "Enemy") {
+            // Debug.Log("플레이어가 맞았읍니다.");
+            OnDamaged(coll.transform.position);
+        }
+    }
+
+    void OnDamaged(Vector2 targetPos) {
+        // LayerMask.NameToLayer("PlayerDamaged");
+        gameObject.layer = 11;
+        
+        // Alpha 
+        spriteRenderer.color = new Color(1,1,1,0.4f);
+
+        int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
+        rigid.AddForce(new Vector2(dirc,1)*7 , ForceMode2D.Impulse);
+
+        anim.SetTrigger("damaged");
+
+        Invoke("OffDamaged",3);
+    }
+
+    void OffDamaged() {
+        gameObject.layer = 10;
+        spriteRenderer.color = new Color(1,1,1,1);
+    }
 }

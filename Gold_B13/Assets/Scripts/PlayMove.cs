@@ -12,6 +12,8 @@ using UnityEngine;
     // Flip : x,y방향으로 반전시킨다.    
 public class PlayMove : MonoBehaviour
 {
+    public GameManager gameManager;
+
     public float maxSpeed;
 
     public float jumpPower; 
@@ -43,7 +45,7 @@ public class PlayMove : MonoBehaviour
         }
 
         // Directiopn Sprite
-        if(Input.GetButtonDown("Horizontal")) {
+        if(Input.GetButton("Horizontal")) {
             spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
         }
 
@@ -82,12 +84,58 @@ public class PlayMove : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll) {
         if(coll.gameObject.tag == "Enemy") {
-            // Debug.Log("플레이어가 맞았읍니다.");
-            OnDamaged(coll.transform.position);
+            // 몬스터보다 위에 있고, 낙하중임
+            if(rigid.velocity.y < 0 && transform.position.y > coll.transform.position.y) {
+                // Attack
+                OnAttack(coll.transform); 
+
+            } else {
+                // Debug.Log("플레이어가 맞았읍니다.");
+                OnDamaged(coll.transform.position);
+            }
+
         }
     }
 
+    void OnTriggerEnter2D(Collider2D coll) {
+        Debug.Log(coll.gameObject.tag);
+        if(coll.gameObject.tag == "item") {
+            // Point
+            bool isBronze = coll.gameObject.name.Contains("Bronze");
+            bool isSilver = coll.gameObject.name.Contains("Silver");
+            bool isGold = coll.gameObject.name.Contains("Gold");
+            int point = 0;
+            if(isBronze) point = 50;
+            if(isSilver) point = 100;
+            if(isGold) point = 300;
+            gameManager.stagePoint += point;
+
+            // Deactive Item
+            coll.gameObject.SetActive(false);
+        }
+        else if(coll.gameObject.tag == "Finish") {
+            // Next Stage
+            gameManager.NextStage();
+        }
+    }
+
+    void OnAttack(Transform enemy) {
+        //
+        gameManager.stagePoint += 100;
+
+
+        // Reaction Force
+        rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+
+        // Enemy Die
+        EnemyMove enemyMove = enemy.GetComponent<EnemyMove>();
+        enemyMove.OnDamaged();
+    }
+
     void OnDamaged(Vector2 targetPos) {
+        // Health Down
+        gameManager.HealthDown();
+
         // LayerMask.NameToLayer("PlayerDamaged");
         gameObject.layer = 11;
         
@@ -105,5 +153,21 @@ public class PlayMove : MonoBehaviour
     void OffDamaged() {
         gameObject.layer = 10;
         spriteRenderer.color = new Color(1,1,1,1);
+    }
+
+    public void OnDie() {
+        // Sprite Alpha
+        spriteRenderer.color = new Color(1,1,1,0.4f);
+
+        // Sprite Flip Y
+        spriteRenderer.flipY = true;
+
+        // Collider Disable
+        // coll.enabled = false;
+
+        // Die Effect Jump
+        rigid.AddForce(Vector2.up * 5 , ForceMode2D.Impulse);
+
+     
     }
 }

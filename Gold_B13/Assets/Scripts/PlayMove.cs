@@ -24,11 +24,51 @@ public class PlayMove : MonoBehaviour
 
     Animator anim;
 
+    CapsuleCollider2D capsuleCollider;
+
+    // Audio
+    public AudioClip audioJump;
+    public AudioClip audioAttack;
+    public AudioClip audioDamaged;
+    public AudioClip audioItem;
+    public AudioClip audioDie;
+    public AudioClip audioFinish;
+    
+
+    AudioSource audioSource;
+
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    void PlaySound(string action) {
+        switch(action) {
+            case "JUMP":
+                audioSource.clip = audioJump;
+                break;
+            case "ATTACK":
+                audioSource.clip = audioAttack;
+                break;
+            case "DAMAGED":
+                audioSource.clip = audioDamaged;
+                break;
+            case "ITEM":
+                audioSource.clip = audioItem;
+                break;
+            case "DIE":
+                audioSource.clip = audioDie;
+                break;
+            case "FINISH":
+                audioSource.clip = audioFinish;
+                break;
+                
+        }
+        audioSource.Play();
     }
 
     void Update() {
@@ -36,6 +76,7 @@ public class PlayMove : MonoBehaviour
         if(Input.GetButtonDown("Jump") && anim.GetBool("isJumping") == false) {
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             anim.SetBool("isJumping", true);
+            PlaySound("JUMP");
         }
 
         // Stop Speed 
@@ -88,10 +129,12 @@ public class PlayMove : MonoBehaviour
             if(rigid.velocity.y < 0 && transform.position.y > coll.transform.position.y) {
                 // Attack
                 OnAttack(coll.transform); 
+                PlaySound("DIE");
 
             } else {
                 // Debug.Log("플레이어가 맞았읍니다.");
                 OnDamaged(coll.transform.position);
+                PlaySound("DAMAGED");
             }
 
         }
@@ -112,10 +155,15 @@ public class PlayMove : MonoBehaviour
 
             // Deactive Item
             coll.gameObject.SetActive(false);
+
+            PlaySound("ITEM");
+
         }
         else if(coll.gameObject.tag == "Finish") {
             // Next Stage
             gameManager.NextStage();
+            PlaySound("FINISH");
+
         }
     }
 
@@ -147,6 +195,8 @@ public class PlayMove : MonoBehaviour
 
         anim.SetTrigger("damaged");
 
+        PlaySound("DAMAGED");
+
         Invoke("OffDamaged",3);
     }
 
@@ -169,5 +219,9 @@ public class PlayMove : MonoBehaviour
         rigid.AddForce(Vector2.up * 5 , ForceMode2D.Impulse);
 
      
+    }
+
+    public void VelocityZero() {
+        rigid.velocity = Vector2.zero;
     }
 }

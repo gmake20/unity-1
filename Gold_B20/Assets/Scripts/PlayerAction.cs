@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerAction : MonoBehaviour
 {
+    public GameManager manager;
+
     float h;
     float v;
     bool isHorizonMove; 
@@ -28,14 +30,14 @@ public class PlayerAction : MonoBehaviour
     void Update()
     {
         // Move Key
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
+        h = manager.isAction ? 0 : Input.GetAxisRaw("Horizontal");
+        v = manager.isAction ? 0 : Input.GetAxisRaw("Vertical");
 
         // check button down&up
-        bool hDown = Input.GetButtonDown("Horizontal");
-        bool vDown = Input.GetButtonDown("Vertical");
-        bool hUp = Input.GetButtonUp("Horizontal");
-        bool vUp = Input.GetButtonUp("Vertical");
+        bool hDown = manager.isAction ? false : Input.GetButtonDown("Horizontal");
+        bool vDown = manager.isAction ? false : Input.GetButtonDown("Vertical");
+        bool hUp = manager.isAction ? false : Input.GetButtonUp("Horizontal");
+        bool vUp = manager.isAction ? false : Input.GetButtonUp("Vertical");
 
         // check Horizontal Move
         if(hDown)
@@ -70,7 +72,8 @@ public class PlayerAction : MonoBehaviour
         
         // Scan Object
         if(Input.GetButtonDown("Jump") && scanObject != null) {
-            Debug.Log("This is : " + scanObject.name);
+            // Debug.Log("This is : " + scanObject.name);
+            manager.Action(scanObject);
         }
     }
 

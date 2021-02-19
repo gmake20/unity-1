@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public TalkManager talkManager;
+
+    public QuestManager questManager;
+
     public int talkIndex; 
     public GameObject talkPanel;
     public Text talkText;
@@ -13,6 +16,11 @@ public class GameManager : MonoBehaviour
     public bool isAction;
 
     public Image talkImg;
+
+    void Start() 
+    {
+        Debug.Log(questManager.CheckQuest());
+    }
 
     public string hello() {
         string[] arr = new string[] { "좋은날씨네요." , "안녕하세요." , "오늘도 즐거운 하루~" ,"잘지내고 있죠?" };
@@ -30,13 +38,17 @@ public class GameManager : MonoBehaviour
     }
 
     void Talk(int id, bool isNpc) {
-        string talkData = talkManager.GetTalk(id,talkIndex);
+        int questTalkIndex = questManager.GetQuestTalkIndex(id);
+
+        string talkData = talkManager.GetTalk(id+questTalkIndex , talkIndex);
         //Debug.Log(talkData);
         //Debug.Log("index:" + talkIndex);
 
+        // end talk
         if(talkData == null) {
             isAction = false;
             talkIndex = 0;
+            Debug.Log(questManager.CheckQuest(id));
             return;
         }
 

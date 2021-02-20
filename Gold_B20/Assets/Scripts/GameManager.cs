@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
     void Start() 
     {
-        // GameLoad();
+        GameLoad();
         questText.text = questManager.CheckQuest();
     }
 

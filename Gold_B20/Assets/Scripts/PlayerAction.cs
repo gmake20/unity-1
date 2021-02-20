@@ -19,6 +19,24 @@ public class PlayerAction : MonoBehaviour
 
     GameObject scanObject; 
 
+    ////////////////////
+    // Mobile Key Value 
+    ////////////////////
+    public int up_value;
+    public int down_value;
+    public int left_value;
+    public int right_value;
+    public bool up_down;
+    public bool down_down;
+    public bool left_down;
+    public bool right_down;
+    public bool up_up;
+    public bool down_up;
+    public bool left_up;
+    public bool right_up;
+    ////////////////////
+
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -30,14 +48,28 @@ public class PlayerAction : MonoBehaviour
     void Update()
     {
         // Move Key
-        h = manager.isAction ? 0 : Input.GetAxisRaw("Horizontal");
-        v = manager.isAction ? 0 : Input.GetAxisRaw("Vertical");
+        // PC
+        h = manager.isAction ? 0 : Input.GetAxisRaw("Horizontal") + right_value + left_value;
+        v = manager.isAction ? 0 : Input.GetAxisRaw("Vertical") + up_value + down_value;
+
+        // Mobile
+        // h = manager.isAction ? 0 : right_value + left_value;
+        // v = manager.isAction ? 0 : up_value + down_value;
+
 
         // check button down&up
-        bool hDown = manager.isAction ? false : Input.GetButtonDown("Horizontal");
-        bool vDown = manager.isAction ? false : Input.GetButtonDown("Vertical");
-        bool hUp = manager.isAction ? false : Input.GetButtonUp("Horizontal");
-        bool vUp = manager.isAction ? false : Input.GetButtonUp("Vertical");
+        // PC
+        bool hDown = manager.isAction ? false : Input.GetButtonDown("Horizontal") || right_down || left_down;
+        bool vDown = manager.isAction ? false : Input.GetButtonDown("Vertical") || up_down || down_down;
+        bool hUp = manager.isAction ? false : Input.GetButtonUp("Horizontal") || right_up || left_up;
+        bool vUp = manager.isAction ? false : Input.GetButtonUp("Vertical") || up_up || down_up;
+
+        // Mobile
+        // bool hDown = manager.isAction ? false : right_down || left_down;
+        // bool vDown = manager.isAction ? false : up_down || down_down;
+        // bool hUp = manager.isAction ? false : right_up || left_up;
+        // bool vUp = manager.isAction ? false : up_up || down_up;
+
 
         // check Horizontal Move
         if(hDown)
@@ -75,6 +107,20 @@ public class PlayerAction : MonoBehaviour
             // Debug.Log("This is : " + scanObject.name);
             manager.Action(scanObject);
         }
+
+        Debug.Log(v + ":" + h);
+
+        // Mobile Var Init
+        up_down = false;
+        down_down = false;
+        left_down = false;
+        right_down = false;
+        up_up = false;
+        down_up = false;
+        left_up = false;
+        right_up = false;
+
+
     }
 
     void FixedUpdate() {
@@ -92,5 +138,56 @@ public class PlayerAction : MonoBehaviour
         else {
             scanObject = null;
         }
+    }
+
+    public void ButtonDown(string type) {
+        switch(type) {
+            case "U":
+                up_value = 1;
+                up_down = true;
+                break;
+            case "D":
+                down_value = -1;
+                down_down = true;
+                break;
+            case "L":
+                left_value = -1;
+                left_down = true;
+                break;
+            case "R":
+                right_value = 1;
+                right_down = true;
+                break;
+            case "A":
+                if(scanObject != null)
+                    manager.Action(scanObject);
+                break;
+            case "C":
+                manager.SubMenuActive();
+                break;
+
+                
+        }
+    }
+    public void ButtonUp(string type) {
+        switch(type) {
+            case "U":
+                up_value= 0;
+                up_up = true;
+                break;
+            case "D":
+                down_value = 0;
+                down_up = true;
+                break;
+            case "L":
+                left_value = 0;
+                left_up = true;
+                break;
+            case "R":
+                right_value = 0;
+                right_up = true;
+                break;
+        }
+        
     }
 }

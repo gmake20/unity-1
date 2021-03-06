@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
 
     public float power;
 
+    public GameManager gameManager;
+
     void Awake() {
         anim = GetComponent<Animator>();
     }
@@ -108,6 +110,10 @@ public class Player : MonoBehaviour
                     isTouchRight = true;
                     break;
             }
+        }
+        else if(coll.gameObject.tag == "Enemy" || coll.gameObject.tag == "EnemyBullet") {
+            gameObject.SetActive(false);
+            gameManager.RespawnPlayer();
         }
     }
 

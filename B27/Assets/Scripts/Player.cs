@@ -9,9 +9,17 @@ public class Player : MonoBehaviour
     public bool isTouchBottom;
     public bool isTouchRight;
     public bool isTouchLeft;
-
     Animator anim;
     
+
+    public GameObject bulletObjA;
+    public GameObject bulletObjB;
+    
+    public float maxShotDelay;  // 최대발사
+    public float curShotDelay;  //
+
+    public float power;
+
     void Awake() {
         anim = GetComponent<Animator>();
     }
@@ -25,6 +33,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Move();
+        Fire();
+        Reload();
+    }
+
+    private void Move() {
         float h = Input.GetAxisRaw("Horizontal");
         if( (isTouchRight && h == 1) || (isTouchLeft && h == -1))  h = 0;
 
@@ -39,6 +53,43 @@ public class Player : MonoBehaviour
         if(Input.GetButtonDown("Horizontal") || Input.GetButtonUp("Horizontal")) {
             anim.SetInteger("Input", (int)h);
         }
+    }
+
+    // Q:Vector3는 default value를 설정할수없나? 
+    void FireBullet(GameObject obj,Vector3 delta) {
+        GameObject bullet = Instantiate(obj,transform.position+delta, transform.rotation);
+        Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
+        rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+    }
+
+    void Fire() {
+        if(!Input.GetButtonDown("Fire1")) 
+            return;
+        if(curShotDelay<maxShotDelay)
+            return;
+
+        switch(power) {
+            case 1:
+                FireBullet(bulletObjA,Vector3.zero);
+                break;
+            case 2:
+                FireBullet(bulletObjA,Vector3.right*0.1f);
+                FireBullet(bulletObjA,Vector3.left*0.1f);
+
+                break;
+            case 3:
+                FireBullet(bulletObjA,Vector3.right*0.35f);
+                FireBullet(bulletObjB,Vector3.zero);
+                FireBullet(bulletObjA,Vector3.left*0.35f);
+                break;
+
+        }
+
+        curShotDelay = 0;
+    }
+
+    void Reload() {
+        curShotDelay += Time.deltaTime;
     }
 
     void OnTriggerEnter2D(Collider2D coll) {

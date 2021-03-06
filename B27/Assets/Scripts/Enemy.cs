@@ -10,7 +10,6 @@ public class Enemy : MonoBehaviour
     public Sprite[] sprites;
 
     SpriteRenderer spriteRenderer;
-    //Rigidbody2D rigid;
     
     public float maxShotDelay;  // 최대발사
     public float curShotDelay;  //
@@ -18,11 +17,11 @@ public class Enemy : MonoBehaviour
     public GameObject bulletObjB;
 
     public GameObject player;
+    public int enemyScore;
+    
 
     void Awake() {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        // rigid = GetComponent<Rigidbody2D>();
-        // rigid.velocity = Vector2.down * speed; 
     }
 
 
@@ -67,6 +66,8 @@ public class Enemy : MonoBehaviour
         Invoke("ReturnSprite", 0.1f);
 
         if(health<=0) {
+            Player playerLogic = player.GetComponent<Player>();
+            playerLogic.score += enemyScore;
             Destroy(gameObject);
         }
     }

@@ -22,6 +22,10 @@ public class Player : MonoBehaviour
 
     public GameManager gameManager;
 
+    public int life;
+    public int score;
+    public bool isHit;
+
     void Awake() {
         anim = GetComponent<Animator>();
     }
@@ -112,8 +116,20 @@ public class Player : MonoBehaviour
             }
         }
         else if(coll.gameObject.tag == "Enemy" || coll.gameObject.tag == "EnemyBullet") {
+            if(isHit) return;
+            isHit = true;
+            life--;
+            gameManager.UpdateLifeIcon(life);
+
+            if(life == 0) {
+                gameManager.GameOver();
+            }
+            else {
+                gameManager.RespawnPlayer();
+            }
+
             gameObject.SetActive(false);
-            gameManager.RespawnPlayer();
+            Destroy(coll.gameObject);
         }
     }
 

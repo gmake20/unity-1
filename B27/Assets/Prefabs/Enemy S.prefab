@@ -145,3 +145,4 @@ MonoBehaviour:
   bulletObjA: {fileID: 7268942026459934921, guid: 283b890e5a158264c94d2d5283d5a21e, type: 3}
   bulletObjB: {fileID: 7268942026459934921, guid: 8e66ed87d3b092744a4c5f15d7213542, type: 3}
   player: {fileID: 0}
+  enemyScore: 50

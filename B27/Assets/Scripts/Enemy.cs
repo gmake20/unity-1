@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
     void OnHit(int dmg) {
         health -= dmg;
         spriteRenderer.sprite = sprites[1];
-        Invoke("ReturnSprite", 0.1f);
+        Invoke(nameof(ReturnSprite), 0.1f);
 
         if(health<=0) {
             Player playerLogic = player.GetComponent<Player>();
@@ -78,10 +78,10 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll) {
         // 화면 밖으로 나가면 삭제 
-        if(coll.gameObject.tag == "BorderBullet") {
+        if(coll.gameObject.CompareTag("BorderBullet")) {
             Destroy(gameObject);
         }
-        else if(coll.gameObject.tag == "PlayerBullet") {
+        else if(coll.gameObject.CompareTag("PlayerBullet")) {
             Bullet bullet = coll.gameObject.GetComponent<Bullet>();
             OnHit(bullet.dmg);
 

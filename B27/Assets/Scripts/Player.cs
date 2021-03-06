@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D coll) {
-        if(coll.gameObject.tag == "Border") {
+        if(coll.gameObject.CompareTag("Border")) {
             switch(coll.gameObject.name) {
                 case "Top":
                     isTouchTop = true;
@@ -115,7 +115,7 @@ public class Player : MonoBehaviour
                     break;
             }
         }
-        else if(coll.gameObject.tag == "Enemy" || coll.gameObject.tag == "EnemyBullet") {
+        else if(coll.gameObject.CompareTag("Enemy") || coll.gameObject.CompareTag("EnemyBullet")) {
             if(isHit) return;
             isHit = true;
             life--;
@@ -134,7 +134,7 @@ public class Player : MonoBehaviour
     }
 
     void OnTriggerExit2D(Collider2D coll) {
-        if(coll.gameObject.tag == "Border") {
+        if(coll.gameObject.CompareTag("Border")) {
             switch(coll.gameObject.name) {
                 case "Top":
                     isTouchTop = false;

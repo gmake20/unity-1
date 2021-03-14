@@ -24,11 +24,31 @@ public class Enemy : MonoBehaviour
     public GameObject player;
     public int enemyScore;
     
+    public ObjectManager objectManager;
+    public string[] bulletObjs;
+    public string[] itemObjs;
 
     void Awake() {
+        bulletObjs = new string[] { "BulletEnemyA", "BulletEnemyB"  };
+        itemObjs = new string[] { "ItemCoin", "ItemPower", "ItemBoom"  };
+
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    void OnEnable() {
+        switch(enemyName) {
+            case "L":
+                health = 40;
+                break;
+            case "M":
+                health = 10;
+                break;
+            case "S":
+                health = 3;
+                break;
+
+        }
+    }
 
     void Update()
     {
@@ -37,8 +57,9 @@ public class Enemy : MonoBehaviour
         Reload();
     }
 
-    void FireBullet(GameObject obj,Vector3 delta, float bulletSpeed=4) {
-        GameObject bullet = Instantiate(obj,transform.position+delta, transform.rotation);
+    void FireBullet(string obj,Vector3 delta, float bulletSpeed=4) {
+        // GameObject bullet = Instantiate(obj,transform.position+delta, transform.rotation);
+        GameObject bullet = objectManager.MakeObj(obj,transform.position+delta, transform.rotation);
         Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
 
         Vector3 dirVec = player.transform.position - transform.position;
@@ -50,10 +71,10 @@ public class Enemy : MonoBehaviour
             return;
 
         if(enemyName == "S") {
-            FireBullet(bulletObjA,Vector3.zero, 3);
+            FireBullet(bulletObjs[0],Vector3.zero, 3);
         } if(enemyName == "L") {
-            FireBullet(bulletObjA,Vector3.right*0.3f);
-            FireBullet(bulletObjA,Vector3.left*0.3f);
+            FireBullet(bulletObjs[1],Vector3.right*0.3f);
+            FireBullet(bulletObjs[1],Vector3.left*0.3f);
         }
 
 
@@ -76,7 +97,8 @@ public class Enemy : MonoBehaviour
         if(health<=0) {
             Player playerLogic = player.GetComponent<Player>();
             playerLogic.score += enemyScore;
-            Destroy(gameObject);
+            // Destroy(gameObject);
+            gameObject.SetActive(false);
 
             // Random Item Drop
             int ran = Random.Range(0,10); 
@@ -84,14 +106,17 @@ public class Enemy : MonoBehaviour
 
             }
             else if(ran < 6) {
-                Instantiate(itemCoin, transform.position, itemCoin.transform.rotation);
+                GameObject obj = objectManager.MakeObj(itemObjs[0], transform.position, itemCoin.transform.rotation);
+                // Instantiate(itemCoin, transform.position, itemCoin.transform.rotation);
             }
             else if(ran < 8) {
-                Instantiate(itemPower, transform.position, itemPower.transform.rotation);
+                GameObject obj = objectManager.MakeObj(itemObjs[1], transform.position, itemCoin.transform.rotation);
+                //Instantiate(itemPower, transform.position, itemPower.transform.rotation);
                 
             }
             else if(ran < 10) {
-                Instantiate(itemBoom, transform.position, itemBoom.transform.rotation);
+                GameObject obj = objectManager.MakeObj(itemObjs[2], transform.position, itemCoin.transform.rotation);
+                //Instantiate(itemBoom, transform.position, itemBoom.transform.rotation);
                 
             }
 
@@ -105,15 +130,20 @@ public class Enemy : MonoBehaviour
     void OnTriggerEnter2D(Collider2D coll) {
         // 화면 밖으로 나가면 삭제 
         if(coll.gameObject.CompareTag("BorderBullet")) {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            // Destroy(gameObject);
         }
         else if(coll.gameObject.CompareTag("PlayerBullet")) {
             Bullet bullet = coll.gameObject.GetComponent<Bullet>();
             OnHit(bullet.dmg);
 
-            Destroy(coll.gameObject);
+            // Destroy(coll.gameObject);
+            coll.gameObject.SetActive(false);
+            
         }
 
     }
+
+
 
 }

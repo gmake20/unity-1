@@ -1945,6 +1945,59 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1031096086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1031096088}
+  - component: {fileID: 1031096087}
+  m_Layer: 0
+  m_Name: ObjectManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1031096087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031096086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041cb8c7e06812d40ac000c26c40314b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyLPrefab: {fileID: 1848705453916249556, guid: f3e82e0dfabb2784eaa813ab5941445a, type: 3}
+  enemyMPrefab: {fileID: 849316225216759697, guid: 9ed6e55b4b812f94ab7e77076ce775f0, type: 3}
+  enemySPrefab: {fileID: 7493899355399039425, guid: 389f3edf50c794c438cb8b176cc1ff56, type: 3}
+  itemCoinPrefab: {fileID: 5984223139276355799, guid: 3e8e1a66ec5ee12479afab740516505b, type: 3}
+  itemPowerPrefab: {fileID: 7553370836194192125, guid: 4050b2533d1a3ed4286d3a43d83b6551, type: 3}
+  itemBoomPrefab: {fileID: 3315094311233823957, guid: c67c7fe96d2fcfb4b93defcc315cb763, type: 3}
+  bulletPlayerAPrefab: {fileID: 8131224743890575653, guid: cd3d7c21818fcd94ea725c43dbead171, type: 3}
+  bulletPlayerBPrefab: {fileID: 7268942026459934921, guid: 5695fa7d188087743938085e369c482b, type: 3}
+  bulletEnemyAPrefab: {fileID: 7268942026459934921, guid: 283b890e5a158264c94d2d5283d5a21e, type: 3}
+  bulletEnemyBPrefab: {fileID: 7268942026459934921, guid: 8e66ed87d3b092744a4c5f15d7213542, type: 3}
+--- !u!4 &1031096088
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031096086}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.42256618, y: 1.1012428, z: -0.9800177}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1114026027
 GameObject:
   m_ObjectHideFlags: 0
@@ -3148,6 +3201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b5257e9182a1484696a4a25d59e90c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletObjs: []
   speed: 3
   isTouchTop: 0
   isTouchBottom: 0
@@ -3163,6 +3217,7 @@ MonoBehaviour:
   boom: 1
   maxboom: 3
   gameManager: {fileID: 1867707238}
+  objectManager: {fileID: 1031096087}
   life: 3
   score: 0
   isHit: 0
@@ -3328,9 +3383,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyObjs:
-  - {fileID: 7493899355399039425, guid: 389f3edf50c794c438cb8b176cc1ff56, type: 3}
-  - {fileID: 849316225216759697, guid: 9ed6e55b4b812f94ab7e77076ce775f0, type: 3}
-  - {fileID: 1848705453916249556, guid: f3e82e0dfabb2784eaa813ab5941445a, type: 3}
+  - 
+  - 
+  - 
   spawnPoints:
   - {fileID: 1167204673}
   - {fileID: 647352735}
@@ -3354,6 +3409,7 @@ MonoBehaviour:
   - {fileID: 1166867846}
   - {fileID: 346544595}
   gameOverSet: {fileID: 937266300}
+  objectManager: {fileID: 1031096087}
 --- !u!4 &1867707239
 Transform:
   m_ObjectHideFlags: 0

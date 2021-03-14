@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public string[] bulletObjs;
     public float speed;
     public bool isTouchTop;
     public bool isTouchBottom;
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour
     public int maxboom;
 
     public GameManager gameManager;
+    public ObjectManager objectManager;
 
     public int life;
     public int score;
@@ -37,6 +39,7 @@ public class Player : MonoBehaviour
 
     void Awake() {
         anim = GetComponent<Animator>();
+        bulletObjs = new string[] { "BulletPlayerA", "BulletPlayerB"  };
     }
 
     // Start is called before the first frame update
@@ -72,8 +75,9 @@ public class Player : MonoBehaviour
     }
 
     // Q:Vector3는 default value를 설정할수없나? 
-    void FireBullet(GameObject obj,Vector3 delta) {
-        GameObject bullet = Instantiate(obj,transform.position+delta, transform.rotation);
+    void FireBullet(string obj,Vector3 delta) {
+        // GameObject bullet = Instantiate(obj,transform.position+delta, transform.rotation);
+        GameObject bullet = objectManager.MakeObj(obj,transform.position+delta, transform.rotation);
         Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
         rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
     }
@@ -86,17 +90,17 @@ public class Player : MonoBehaviour
 
         switch(power) {
             case 1:
-                FireBullet(bulletObjA,Vector3.zero);
+                FireBullet(bulletObjs[0],Vector3.zero);
                 break;
             case 2:
-                FireBullet(bulletObjA,Vector3.right*0.1f);
-                FireBullet(bulletObjA,Vector3.left*0.1f);
+                FireBullet(bulletObjs[0],Vector3.right*0.1f);
+                FireBullet(bulletObjs[0],Vector3.left*0.1f);
 
                 break;
             case 3:
-                FireBullet(bulletObjA,Vector3.right*0.35f);
-                FireBullet(bulletObjB,Vector3.zero);
-                FireBullet(bulletObjA,Vector3.left*0.35f);
+                FireBullet(bulletObjs[0],Vector3.right*0.35f);
+                FireBullet(bulletObjs[1],Vector3.zero);
+                FireBullet(bulletObjs[0],Vector3.left*0.35f);
                 break;
 
         }
@@ -123,16 +127,18 @@ public class Player : MonoBehaviour
 
         boomEffect.SetActive(true);
         Invoke(nameof(OffBoomEffect), 4f);
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        for(int i=0;i<enemies.Length;i++) {
-            Enemy enemyLogic = enemies[i].GetComponent<Enemy>();
+
+        List<GameObject> enemyList = objectManager.GetActiveEnemyPool();
+        foreach(GameObject obj in enemyList) {
+            Enemy enemyLogic = obj.GetComponent<Enemy>();
             enemyLogic.OnHit(1000);
         }
 
-        GameObject[] bullets = GameObject.FindGameObjectsWithTag("EnemyBullet");
-        for(int i=0;i<bullets.Length;i++) {
-            Destroy(bullets[i]);
-        }            
+        List<GameObject> enemyBulletList = objectManager.GetActiveEnemyBulletPool();
+        foreach(GameObject obj in enemyBulletList) {
+            obj.SetActive(false);
+        }
+              
     }
 
     void OnTriggerEnter2D(Collider2D coll) {
@@ -166,7 +172,8 @@ public class Player : MonoBehaviour
             }
 
             gameObject.SetActive(false);
-            Destroy(coll.gameObject);
+            // Destroy(coll.gameObject);
+            coll.gameObject.SetActive(false);
         }
         else if(coll.gameObject.CompareTag("Item")) {
             Item item = coll.gameObject.GetComponent<Item>();
@@ -192,7 +199,8 @@ public class Player : MonoBehaviour
                     break;    
             }
 
-            Destroy(coll.gameObject);
+            // Destroy(coll.gameObject);
+            coll.gameObject.SetActive(false);
         }
     }
 

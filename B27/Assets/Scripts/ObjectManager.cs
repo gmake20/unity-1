@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ObjectManager : MonoBehaviour
 {
+    public GameObject parentObj;
+
     public GameObject enemyLPrefab;
     public GameObject enemyMPrefab;
     public GameObject enemySPrefab;
@@ -46,61 +48,56 @@ public class ObjectManager : MonoBehaviour
         Generate();
     }
 
+    GameObject CreateObject(GameObject prefab) {
+        GameObject obj = Instantiate(prefab);
+        obj.SetActive(false);
+        obj.transform.parent = parentObj.transform;
+        return obj;
+    }
+
     void Generate() {
         for(int i=0;i<enemyL.Length;i++) {
-            enemyL[i] = Instantiate(enemyLPrefab);
-            enemyL[i].SetActive(false);
+            enemyL[i] = CreateObject(enemyLPrefab);
         }
 
         for(int i=0;i<enemyM.Length;i++) {
-            enemyM[i] = Instantiate(enemyMPrefab);
-            enemyM[i].SetActive(false);
+            enemyM[i] = CreateObject(enemyMPrefab);
         }
 
         for(int i=0;i<enemyS.Length;i++) {
-            enemyS[i] = Instantiate(enemySPrefab);
-            enemyS[i].SetActive(false);
+            enemyS[i] = CreateObject(enemySPrefab);
         }
 
         for(int i=0;i<itemCoin.Length;i++) {
-            itemCoin[i] = Instantiate(itemCoinPrefab);
-            itemCoin[i].SetActive(false);
+            itemCoin[i] = CreateObject(itemCoinPrefab);
         }
 
         for(int i=0;i<itemPower.Length;i++) {
-            itemPower[i] = Instantiate(itemPowerPrefab);
-            itemPower[i].SetActive(false);
+            itemPower[i] = CreateObject(itemPowerPrefab);
         }
 
         for(int i=0;i<itemBoom.Length;i++) {
-            itemBoom[i] = Instantiate(itemBoomPrefab);
-            itemBoom[i].SetActive(false);
+            itemBoom[i] = CreateObject(itemBoomPrefab);
         }
 
         for(int i=0;i<bulletPlayerA.Length;i++) {
-            bulletPlayerA[i] = Instantiate(bulletPlayerAPrefab);
-            bulletPlayerA[i].SetActive(false);
+            bulletPlayerA[i] = CreateObject(bulletPlayerAPrefab);
         }
         for(int i=0;i<bulletPlayerB.Length;i++) {
-            bulletPlayerB[i] = Instantiate(bulletPlayerBPrefab);
-            bulletPlayerB[i].SetActive(false);
+            bulletPlayerB[i] = CreateObject(bulletPlayerBPrefab);
         }
 
         for(int i=0;i<bulletEnemyA.Length;i++) {
-            bulletEnemyA[i] = Instantiate(bulletEnemyAPrefab);
-            bulletEnemyA[i].SetActive(false);
+            bulletEnemyA[i] = CreateObject(bulletEnemyAPrefab);
         }
         for(int i=0;i<bulletEnemyB.Length;i++) {
-            bulletEnemyB[i] = Instantiate(bulletEnemyBPrefab);
-            bulletEnemyB[i].SetActive(false);
+            bulletEnemyB[i] = CreateObject(bulletEnemyBPrefab);
         }                
     }
 
 
     public GameObject MakeObj(string type, Vector3 pos, Quaternion rot) {
         Debug.Log(type);
-
-
         GameObject[] targetPool = null;
 
         switch(type) {
@@ -216,15 +213,4 @@ public class ObjectManager : MonoBehaviour
 
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

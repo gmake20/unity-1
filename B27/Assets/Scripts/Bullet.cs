@@ -8,10 +8,8 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll) {
         if(coll.gameObject.CompareTag("BorderBullet")) {
-            // Destroy(gameObject);
             gameObject.SetActive(false);
         }
     }
-
 
 }

@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public string[] enemyObjs;
     public Transform[] spawnPoints;
 
     public float maxSpawnDelay;
@@ -21,8 +20,12 @@ public class GameManager : MonoBehaviour
 
     public ObjectManager objectManager;
 
+
+    public enum eEnemy {
+        EnemyL = 0, EnemyM = 1,EnemyS=2
+    }
+
     void Awake() {
-        enemyObjs = new string[] { "EnemyL", "EnemyM" , "EnemyS" };
     }
 
     void Update() {
@@ -43,8 +46,7 @@ public class GameManager : MonoBehaviour
         int randEnemy = Random.Range(0,3);
         int randPoint = Random.Range(0,spawnPoints.Length);
 
-        GameObject enemy = objectManager.MakeObj(enemyObjs[randEnemy], spawnPoints[randPoint].position, spawnPoints[randPoint].rotation);        
-        // GameObject enemy = Instantiate(enemyObjs[randEnemy], spawnPoints[randPoint].position, spawnPoints[randPoint].rotation);
+        GameObject enemy = objectManager.MakeObj(((eEnemy)randEnemy).ToString(), spawnPoints[randPoint].position, spawnPoints[randPoint].rotation);        
 
         Rigidbody2D rigid = enemy.GetComponent<Rigidbody2D>();
         Enemy enemyLogic =  enemy.GetComponent<Enemy>();

@@ -25,13 +25,16 @@ public class Enemy : MonoBehaviour
     public int enemyScore;
     
     public ObjectManager objectManager;
-    public string[] bulletObjs;
-    public string[] itemObjs;
+
+
+    public enum eEnemyBullet {
+        BulletEnemyA = 0, BulletEnemyB = 1
+    }
+    public enum eItem {
+        ItemCoin = 0, ItemPower = 1,ItemBoom=2
+    }
 
     void Awake() {
-        bulletObjs = new string[] { "BulletEnemyA", "BulletEnemyB"  };
-        itemObjs = new string[] { "ItemCoin", "ItemPower", "ItemBoom"  };
-
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -71,10 +74,10 @@ public class Enemy : MonoBehaviour
             return;
 
         if(enemyName == "S") {
-            FireBullet(bulletObjs[0],Vector3.zero, 3);
+            FireBullet(eEnemyBullet.BulletEnemyA.ToString(),Vector3.zero, 3);
         } if(enemyName == "L") {
-            FireBullet(bulletObjs[1],Vector3.right*0.3f);
-            FireBullet(bulletObjs[1],Vector3.left*0.3f);
+            FireBullet(eEnemyBullet.BulletEnemyB.ToString(),Vector3.right*0.3f);
+            FireBullet(eEnemyBullet.BulletEnemyB.ToString(),Vector3.left*0.3f);
         }
 
 
@@ -97,7 +100,6 @@ public class Enemy : MonoBehaviour
         if(health<=0) {
             Player playerLogic = player.GetComponent<Player>();
             playerLogic.score += enemyScore;
-            // Destroy(gameObject);
             gameObject.SetActive(false);
 
             // Random Item Drop
@@ -106,18 +108,13 @@ public class Enemy : MonoBehaviour
 
             }
             else if(ran < 6) {
-                GameObject obj = objectManager.MakeObj(itemObjs[0], transform.position, itemCoin.transform.rotation);
-                // Instantiate(itemCoin, transform.position, itemCoin.transform.rotation);
+                GameObject obj = objectManager.MakeObj(eItem.ItemCoin.ToString(), transform.position, itemCoin.transform.rotation);
             }
             else if(ran < 8) {
-                GameObject obj = objectManager.MakeObj(itemObjs[1], transform.position, itemCoin.transform.rotation);
-                //Instantiate(itemPower, transform.position, itemPower.transform.rotation);
-                
+                GameObject obj = objectManager.MakeObj(eItem.ItemPower.ToString(), transform.position, itemCoin.transform.rotation);       
             }
             else if(ran < 10) {
-                GameObject obj = objectManager.MakeObj(itemObjs[2], transform.position, itemCoin.transform.rotation);
-                //Instantiate(itemBoom, transform.position, itemBoom.transform.rotation);
-                
+                GameObject obj = objectManager.MakeObj(eItem.ItemBoom.ToString(), transform.position,itemCoin.transform.rotation);
             }
 
         }
@@ -131,19 +128,14 @@ public class Enemy : MonoBehaviour
         // 화면 밖으로 나가면 삭제 
         if(coll.gameObject.CompareTag("BorderBullet")) {
             gameObject.SetActive(false);
-            // Destroy(gameObject);
         }
         else if(coll.gameObject.CompareTag("PlayerBullet")) {
             Bullet bullet = coll.gameObject.GetComponent<Bullet>();
             OnHit(bullet.dmg);
 
-            // Destroy(coll.gameObject);
-            coll.gameObject.SetActive(false);
-            
+            coll.gameObject.SetActive(false);            
         }
-
     }
-
 
 
 }

@@ -27,10 +27,10 @@ public class Enemy : MonoBehaviour
     public ObjectManager objectManager;
 
 
-    public enum eEnemyBullet {
+    private enum eEnemyBullet {
         BulletEnemyA = 0, BulletEnemyB = 1
     }
-    public enum eItem {
+    private enum eItem {
         ItemCoin = 0, ItemPower = 1,ItemBoom=2
     }
 

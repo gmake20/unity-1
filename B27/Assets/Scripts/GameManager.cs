@@ -68,19 +68,19 @@ public class GameManager : MonoBehaviour
 
     public void UpdateLifeIcon(int life) {
         for(int i=0;i<3;i++) {
-            lifeImage[i].color = new Color(1,1,1,0);
+            lifeImage[i].color = Color.clear;
         }
         for(int i=0;i<life ;i++) {
-            lifeImage[i].color = new Color(1,1,1,1);
+            lifeImage[i].color = Color.white;
         }
     }
 
     public void UpdateBoomIcon(int boom) {
         for(int i=0;i<3;i++) {
-            boomImage[i].color = new Color(1,1,1,0);
+            boomImage[i].color = Color.clear;
         }
         for(int i=0;i<boom ;i++) {
-            boomImage[i].color = new Color(1,1,1,1);
+            boomImage[i].color = Color.white;
         }
     }
 

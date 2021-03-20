@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public bool isTouchBottom;
     public bool isTouchRight;
     public bool isTouchLeft;
-    Animator anim;
+    Animator _anim;
     
 
     public GameObject bulletObjA;
@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
     }
 
     void Awake() {
-        anim = GetComponent<Animator>();
+        _anim = GetComponent<Animator>();
     }
 
 
@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
         transform.position = curPos + nextgPos;
         
         if(Input.GetButtonDown("Horizontal") || Input.GetButtonUp("Horizontal")) {
-            anim.SetInteger("Input", (int)h);
+            _anim.SetInteger("Input", (int)h);
         }
     }
 

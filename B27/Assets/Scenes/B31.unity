@@ -123,6 +123,36 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &10693659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 10693660}
+  m_Layer: 0
+  m_Name: ObjectPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &10693660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10693659}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.6518435, y: 0.588396, z: -5.6594043}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &42125004
 GameObject:
   m_ObjectHideFlags: 0
@@ -1974,6 +2004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 041cb8c7e06812d40ac000c26c40314b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentObj: {fileID: 10693659}
   enemyLPrefab: {fileID: 1848705453916249556, guid: f3e82e0dfabb2784eaa813ab5941445a, type: 3}
   enemyMPrefab: {fileID: 849316225216759697, guid: 9ed6e55b4b812f94ab7e77076ce775f0, type: 3}
   enemySPrefab: {fileID: 7493899355399039425, guid: 389f3edf50c794c438cb8b176cc1ff56, type: 3}
@@ -3201,7 +3232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b5257e9182a1484696a4a25d59e90c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletObjs: []
   speed: 3
   isTouchTop: 0
   isTouchBottom: 0
@@ -3382,10 +3412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4daff2679c79e054ca30845099abce02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyObjs:
-  - 
-  - 
-  - 
   spawnPoints:
   - {fileID: 1167204673}
   - {fileID: 647352735}

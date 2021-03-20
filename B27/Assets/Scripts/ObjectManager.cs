@@ -34,7 +34,7 @@ public class ObjectManager : MonoBehaviour
     void Awake() {
         enemyL = new GameObject[10];
         enemyM = new GameObject[10];
-        enemyS = new GameObject[10];
+        enemyS = new GameObject[20];
 
         itemCoin = new GameObject[10];
         itemPower = new GameObject[10];
@@ -42,8 +42,8 @@ public class ObjectManager : MonoBehaviour
 
         bulletPlayerA = new GameObject[20];
         bulletPlayerB = new GameObject[10];
-        bulletEnemyA = new GameObject[10];
-        bulletEnemyB = new GameObject[10];
+        bulletEnemyA = new GameObject[20];
+        bulletEnemyB = new GameObject[20];
 
         Generate();
     }

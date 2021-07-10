@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
             if(line == null) break;
             Spawn spawnData = new Spawn();
             string[] tmp = line.Split(',');
-            Debug.Log(line);
+            // Debug.Log(line);
 
             if(tmp[1].Length<1) break;
             spawnData.delay = float.Parse(tmp[0]);
@@ -68,7 +68,15 @@ public class GameManager : MonoBehaviour
     void Update() {
         curSpawnDelay += Time.deltaTime;
 
-        if(curSpawnDelay > nextSpawnDelay && !spawnEnd) {
+        // spawn이 끝나고 10초지나면 다시 처음부터 적등장 
+        if(curSpawnDelay > 10.0 && spawnEnd)
+        {
+            spawnIndex = 0;
+            spawnEnd = false;
+        }
+ 
+        // curSpawnDelay 값이 nextSpawnDelay 값보다 크면 적비행기 생성 
+        if (curSpawnDelay > nextSpawnDelay && !spawnEnd) {
             SpawnEnemy();
             // nextSpawnDelay = Random.Range(0.5f,3f);
             curSpawnDelay = 0;
@@ -79,6 +87,7 @@ public class GameManager : MonoBehaviour
         scoreText.text = string.Format("{0:n0}", playerLogic.score);
     }
 
+    // 적비행기 생성 
     void SpawnEnemy() {
         int enemyIndex = 0;
         switch(spawnList[spawnIndex].type) {

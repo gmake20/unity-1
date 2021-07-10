@@ -5,6 +5,6 @@ using UnityEngine;
 public class Spawn 
 {
     public float delay;
-    public string type;
-    public int point;
+    public string type; // S,M,L
+    public int point;   // 위치 
 }

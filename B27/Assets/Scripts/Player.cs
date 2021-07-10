@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
 
     public bool isBoomTime;
 
+    public GameObject[] followers;
+
     public enum ePlayerBullet {
         BulletPlayerA = 0, BulletPlayerB = 1
     }
@@ -92,7 +94,7 @@ public class Player : MonoBehaviour
                 FireBullet(ePlayerBullet.BulletPlayerA.ToString(),Vector3.left*0.1f);
 
                 break;
-            case 3:
+            default:
                 FireBullet(ePlayerBullet.BulletPlayerA.ToString(),Vector3.right*0.35f);
                 FireBullet(ePlayerBullet.BulletPlayerB.ToString(),Vector3.zero);
                 FireBullet(ePlayerBullet.BulletPlayerA.ToString(),Vector3.left*0.35f);
@@ -176,9 +178,12 @@ public class Player : MonoBehaviour
                     score += 1000;
                     break;
                 case "power":
-                    if(power < maxpower)
+                    if (power < maxpower)
+                    {
                         power++;
-                    else 
+                        AddFollower();
+                    }
+                    else
                         score += 500;
 
                     break;
@@ -194,6 +199,22 @@ public class Player : MonoBehaviour
             }
 
             coll.gameObject.SetActive(false);
+        }
+    }
+
+    void AddFollower()
+    {
+        if(power == 4)
+        {
+            followers[0].SetActive(true);
+        }
+        else if (power == 5)
+        {
+            followers[1].SetActive(true);
+        }
+        else if (power == 6)
+        {
+            followers[2].SetActive(true);
         }
     }
 

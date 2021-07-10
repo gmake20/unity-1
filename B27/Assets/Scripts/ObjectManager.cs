@@ -16,7 +16,8 @@ public class ObjectManager : MonoBehaviour
     public GameObject bulletPlayerBPrefab;
     public GameObject bulletEnemyAPrefab;
     public GameObject bulletEnemyBPrefab;
-    
+
+    public GameObject bulletFollowerPrefab;
 
     GameObject[] enemyL;
     GameObject[] enemyM;
@@ -31,6 +32,8 @@ public class ObjectManager : MonoBehaviour
     GameObject[] bulletEnemyA;
     GameObject[] bulletEnemyB;
 
+    GameObject[] bulletFollower;
+
     void Awake() {
         enemyL = new GameObject[10];
         enemyM = new GameObject[10];
@@ -44,6 +47,8 @@ public class ObjectManager : MonoBehaviour
         bulletPlayerB = new GameObject[10];
         bulletEnemyA = new GameObject[20];
         bulletEnemyB = new GameObject[20];
+
+        bulletFollower = new GameObject[20];
 
         Generate();
     }
@@ -92,7 +97,11 @@ public class ObjectManager : MonoBehaviour
         }
         for(int i=0;i<bulletEnemyB.Length;i++) {
             bulletEnemyB[i] = CreateObject(bulletEnemyBPrefab);
-        }                
+        }
+        for (int i = 0; i < bulletFollower.Length; i++)
+        {
+            bulletFollower[i] = CreateObject(bulletFollowerPrefab);
+        }
     }
 
 
@@ -131,10 +140,13 @@ public class ObjectManager : MonoBehaviour
             case "BulletEnemyB":
                 targetPool = bulletEnemyB;
                 break;
+            case "BulletFollower":
+                targetPool = bulletFollower;
+                break;
         }
 
 
-        for(int i=0;i<targetPool.Length;i++) {
+        for (int i=0;i<targetPool.Length;i++) {
             if(!targetPool[i].activeSelf) {
                 targetPool[i].SetActive(true);
                 targetPool[i].transform.position = pos;

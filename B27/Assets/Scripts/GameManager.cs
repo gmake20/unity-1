@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
 
     public enum eEnemy {
-        EnemyL = 0, EnemyM = 1,EnemyS=2
+        EnemyL = 0, EnemyM = 1, EnemyS = 2, EnemyB = 3
     }
 
     public List<Spawn> spawnList;
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
         curSpawnDelay += Time.deltaTime;
 
         // spawn이 끝나고 10초지나면 다시 처음부터 적등장 
-        if(curSpawnDelay > 10.0 && spawnEnd)
+        if(curSpawnDelay > 130.0 && spawnEnd)
         {
             spawnIndex = 0;
             spawnEnd = false;
@@ -91,6 +91,10 @@ public class GameManager : MonoBehaviour
     void SpawnEnemy() {
         int enemyIndex = 0;
         switch(spawnList[spawnIndex].type) {
+            case "B":
+                enemyIndex = 3;
+                break;
+
             case "S":
                 enemyIndex = 2;
                 break;

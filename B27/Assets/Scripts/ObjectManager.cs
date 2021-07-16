@@ -6,6 +6,7 @@ public class ObjectManager : MonoBehaviour
 {
     public GameObject parentObj;
 
+    public GameObject enemyBPrefab;
     public GameObject enemyLPrefab;
     public GameObject enemyMPrefab;
     public GameObject enemySPrefab;
@@ -16,9 +17,12 @@ public class ObjectManager : MonoBehaviour
     public GameObject bulletPlayerBPrefab;
     public GameObject bulletEnemyAPrefab;
     public GameObject bulletEnemyBPrefab;
+    public GameObject bulletBossAPrefab;
+    public GameObject bulletBossBPrefab;
 
     public GameObject bulletFollowerPrefab;
 
+    GameObject[] enemyB;
     GameObject[] enemyL;
     GameObject[] enemyM;
     GameObject[] enemyS;
@@ -31,10 +35,13 @@ public class ObjectManager : MonoBehaviour
     GameObject[] bulletPlayerB;
     GameObject[] bulletEnemyA;
     GameObject[] bulletEnemyB;
+    GameObject[] bulletBossA;
+    GameObject[] bulletBossB;
 
     GameObject[] bulletFollower;
 
     void Awake() {
+        enemyB = new GameObject[10];
         enemyL = new GameObject[10];
         enemyM = new GameObject[10];
         enemyS = new GameObject[20];
@@ -47,6 +54,9 @@ public class ObjectManager : MonoBehaviour
         bulletPlayerB = new GameObject[10];
         bulletEnemyA = new GameObject[20];
         bulletEnemyB = new GameObject[20];
+
+        bulletBossA = new GameObject[200];
+        bulletBossB = new GameObject[200];
 
         bulletFollower = new GameObject[20];
 
@@ -61,11 +71,17 @@ public class ObjectManager : MonoBehaviour
     }
 
     void Generate() {
-        for(int i=0;i<enemyL.Length;i++) {
+        for (int i = 0; i < enemyB.Length; i++)
+        {
+            enemyB[i] = CreateObject(enemyBPrefab);
+        }
+
+        for (int i = 0; i < enemyL.Length; i++)
+        {
             enemyL[i] = CreateObject(enemyLPrefab);
         }
 
-        for(int i=0;i<enemyM.Length;i++) {
+        for (int i=0;i<enemyM.Length;i++) {
             enemyM[i] = CreateObject(enemyMPrefab);
         }
 
@@ -98,6 +114,14 @@ public class ObjectManager : MonoBehaviour
         for(int i=0;i<bulletEnemyB.Length;i++) {
             bulletEnemyB[i] = CreateObject(bulletEnemyBPrefab);
         }
+        for (int i = 0; i < bulletBossA.Length; i++)
+        {
+            bulletBossA[i] = CreateObject(bulletBossAPrefab);
+        }
+        for (int i = 0; i < bulletBossB.Length; i++)
+        {
+            bulletBossB[i] = CreateObject(bulletBossBPrefab);
+        }
         for (int i = 0; i < bulletFollower.Length; i++)
         {
             bulletFollower[i] = CreateObject(bulletFollowerPrefab);
@@ -110,6 +134,9 @@ public class ObjectManager : MonoBehaviour
         GameObject[] targetPool = null;
 
         switch(type) {
+            case "EnemyB":
+                targetPool = enemyB;
+                break;
             case "EnemyL":
                 targetPool = enemyL;
                 break;
@@ -140,11 +167,18 @@ public class ObjectManager : MonoBehaviour
             case "BulletEnemyB":
                 targetPool = bulletEnemyB;
                 break;
+            case "BulletBossA":
+                targetPool = bulletBossA;
+                break;
+            case "BulletBossB":
+                targetPool = bulletBossB;
+                break;
             case "BulletFollower":
                 targetPool = bulletFollower;
                 break;
         }
 
+        Debug.Log("MakeObj:"+type);
 
         for (int i=0;i<targetPool.Length;i++) {
             if(!targetPool[i].activeSelf) {
@@ -163,7 +197,12 @@ public class ObjectManager : MonoBehaviour
     public List<GameObject> GetActiveEnemyPool() {
         List<GameObject> list = new List<GameObject>();
 
-        for(int i=0;i<enemyL.Length;i++) 
+
+        for (int i = 0; i < enemyB.Length; i++)
+            if (enemyB[i].activeSelf)
+                list.Add(enemyB[i]);
+
+        for (int i=0;i<enemyL.Length;i++) 
             if(enemyL[i].activeSelf) 
                 list.Add(enemyL[i]);
         for(int i=0;i<enemyM.Length;i++) 
@@ -190,6 +229,9 @@ public class ObjectManager : MonoBehaviour
     public GameObject[] GetPool(string type) {
         GameObject[] targetPool = null;
         switch(type) {
+            case "EnemyB":
+                targetPool = enemyB;
+                break;
             case "EnemyL":
                 targetPool = enemyL;
                 break;
@@ -219,6 +261,12 @@ public class ObjectManager : MonoBehaviour
                 break;
             case "BulletEnemyB":
                 targetPool = bulletEnemyB;
+                break;
+            case "BulletBossA":
+                targetPool = bulletBossA;
+                break;
+            case "BulletBossB":
+                targetPool = bulletBossB;
                 break;
         }
         return targetPool;

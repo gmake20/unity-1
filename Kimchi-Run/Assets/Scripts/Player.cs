@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private static readonly int State = Animator.StringToHash("state");
+
     [Header("Settings")]
     public float JumpForce;
 
@@ -23,7 +25,7 @@ public class Player : MonoBehaviour
             // PlayerRigidBody.linearVelocityY = 20;
             PlayerRigidBody.AddForceY(JumpForce, ForceMode2D.Impulse);
             isGrounded = false;
-            PlayerAnimator.SetInteger("state", 1);
+            PlayerAnimator.SetInteger(State, 1);
         }
     }
 
@@ -33,7 +35,7 @@ public class Player : MonoBehaviour
         {
             if(!isGrounded)
             {
-                PlayerAnimator.SetInteger("state", 2);
+                PlayerAnimator.SetInteger(State, 2);
             }
             isGrounded = true;
         }
@@ -74,7 +76,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             if(!isInvincible)
             {
@@ -82,12 +84,12 @@ public class Player : MonoBehaviour
                 Hit();
             }
         }
-        else if (collision.gameObject.tag == "Food")
+        else if (collision.gameObject.CompareTag("Food"))
         {
             Destroy(collision.gameObject);
             Heal();
         }
-        else if (collision.gameObject.tag == "Golden")
+        else if (collision.gameObject.CompareTag("Golden"))
         {
             Destroy(collision.gameObject);
             StartInvinclble();

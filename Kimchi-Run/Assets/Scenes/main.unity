@@ -149,10 +149,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086c1b29ad23817409581bbcf55468ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHeart: {fileID: -5190086840121592426, guid: 2199fdad41db8ad48bee533df475a871, type: 3}
-  OffHeart: {fileID: 3054613455101831404, guid: 05993ea7883339148b91d5f2c678e908, type: 3}
+  onHeart: {fileID: -5190086840121592426, guid: 2199fdad41db8ad48bee533df475a871, type: 3}
+  offHeart: {fileID: 3054613455101831404, guid: 05993ea7883339148b91d5f2c678e908, type: 3}
   spriteRenderer: {fileID: 35674058}
-  LineNumber: 2
+  lineNumber: 2
 --- !u!212 &35674058
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -440,7 +440,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &337607234
 Animator:
   serializedVersion: 7
@@ -1120,10 +1120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086c1b29ad23817409581bbcf55468ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHeart: {fileID: -5190086840121592426, guid: 2199fdad41db8ad48bee533df475a871, type: 3}
-  OffHeart: {fileID: 3054613455101831404, guid: 05993ea7883339148b91d5f2c678e908, type: 3}
+  onHeart: {fileID: -5190086840121592426, guid: 2199fdad41db8ad48bee533df475a871, type: 3}
+  offHeart: {fileID: 3054613455101831404, guid: 05993ea7883339148b91d5f2c678e908, type: 3}
   spriteRenderer: {fileID: 626099260}
-  LineNumber: 3
+  lineNumber: 3
 --- !u!212 &626099260
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1224,10 +1224,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086c1b29ad23817409581bbcf55468ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHeart: {fileID: -5190086840121592426, guid: 2199fdad41db8ad48bee533df475a871, type: 3}
-  OffHeart: {fileID: 3054613455101831404, guid: 05993ea7883339148b91d5f2c678e908, type: 3}
+  onHeart: {fileID: -5190086840121592426, guid: 2199fdad41db8ad48bee533df475a871, type: 3}
+  offHeart: {fileID: 3054613455101831404, guid: 05993ea7883339148b91d5f2c678e908, type: 3}
   spriteRenderer: {fileID: 999092643}
-  LineNumber: 1
+  lineNumber: 1
 --- !u!212 &999092643
 SpriteRenderer:
   m_ObjectHideFlags: 0

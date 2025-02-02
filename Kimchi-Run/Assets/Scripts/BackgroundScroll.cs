@@ -3,7 +3,7 @@ using UnityEngine;
 public class BackgroundScroll : MonoBehaviour
 {
     [Header("Settings")]
-    [Tooltip("Scroll ¼Óµµ°¡ ¾ó¸¶³ª »¡¶ó¾ßÇÏ´Â°¡?")]
+    [Tooltip("Scroll ì†ë„ê°€ ì–¼ë§ˆë‚˜ ë¹¨ë¼ì•¼í•˜ëŠ”ê°€?")]
     public float scrollSpeed;
 
     [Header("References")]

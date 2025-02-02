@@ -6,20 +6,15 @@ public class ObjectPool : MonoBehaviour
     public GameObject prefab;
     public int poolSize = 10;
 
-    private Queue<GameObject> pool = new Queue<GameObject>();
+    private Queue<GameObject> _pool = new Queue<GameObject>();
 
-    private void Start()
-    {
-
-    }
-
-    public void init(GameObject p)
+    public void Init(GameObject p)
     {
         for(int i=0;i<poolSize;i++)
         {
             GameObject obj = Instantiate(prefab,p.transform);
             obj.SetActive(false);
-            pool.Enqueue(obj);
+            _pool.Enqueue(obj);
         }
     }
 
@@ -27,9 +22,9 @@ public class ObjectPool : MonoBehaviour
     {
         GameObject obj;
 
-        if(pool.Count > 0)
+        if(_pool.Count > 0)
         {
-            obj = pool.Dequeue();
+            obj = _pool.Dequeue();
         }
         else
         {
@@ -45,7 +40,7 @@ public class ObjectPool : MonoBehaviour
     public void ReturnObject(GameObject obj)
     {
         obj.SetActive(false);
-        pool.Enqueue(obj);
+        _pool.Enqueue(obj);
     }
 
 }

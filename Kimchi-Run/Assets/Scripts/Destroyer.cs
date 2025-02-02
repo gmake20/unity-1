@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Destroyer : MonoBehaviour
 {
-    ObjectPool pool;
+    ObjectPool _pool;
 
     public void SetPool(ObjectPool p)
     {
-        pool = p;
+        _pool = p;
     }
 
     // Update is called once per frame
@@ -14,9 +14,9 @@ public class Destroyer : MonoBehaviour
     {
         if(transform.position.x < -15)
         {
-            if(pool)
+            if(_pool)
             {
-                pool.ReturnObject(gameObject);
+                _pool.ReturnObject(gameObject);
             }
             else
             {
